@@ -183,7 +183,7 @@ const PersonalPredictions = ({ bpm, beatAvg, degreeC, ecg, spo2 }) => {
 
       {user && user.contact && (
         <button 
-            onClick={() => sendMessage(user.contact, 'Sending healthcare msg')}
+            onClick={() => sendMessage(user.contact, 'Urgent: Immediate medical assistance required. Please respond as soon as possible.')}
             style={{
               width: '100%', 
               backgroundColor: 'red', 
