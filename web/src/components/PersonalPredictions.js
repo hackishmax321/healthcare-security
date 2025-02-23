@@ -12,6 +12,28 @@ const PersonalPredictions = ({ bpm, beatAvg, degreeC, ecg, spo2 }) => {
   const [icon, setIcon] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const [user, setUser] = useState(() => {
+      const storedUser = localStorage.getItem('user');
+      return storedUser ? JSON.parse(storedUser) : {};
+  });
+
+  useEffect(() => {
+      if (!user.contact) {
+        console.warn("User data is not available or invalid.");
+      }
+  }, [user]);
+
+
+  const sendMessage = async (mobile, message) => {
+      try {
+          await fetch('https://app.notify.lk/api/v1/send?user_id=29106&api_key=dOrAUpqYTxOQJBtQjcsN&sender_id=NotifyDEMO&to=+94'+mobile.substring(1)+'&message='+message+'').then((response) => {
+              console.log(response);
+          });
+      } catch (error) {
+          console.error('Error:', error); 
+      }
+  };
+
 
   useEffect(() => {
     // Function to fetch health prediction data
@@ -158,6 +180,25 @@ const PersonalPredictions = ({ bpm, beatAvg, degreeC, ecg, spo2 }) => {
             </GoogleMap>
           </LoadScript>}
       </div>
+
+      {user && user.contact && (
+        <button 
+            onClick={() => sendMessage(user.contact, 'Sending healthcare msg')}
+            style={{
+              width: '100%', 
+              backgroundColor: 'red', 
+              color: 'white', 
+              padding: '10px', 
+              margin: '10px 0', 
+              border: 'none', 
+              borderRadius: '5px', 
+              cursor: 'pointer'
+            }}
+          >
+            Send Emergency Message
+        </button>
+      
+      )}
       
     </div>
   );

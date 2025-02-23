@@ -7,6 +7,7 @@ import PatientManagement from '../components/PatientsManagement';
 import PatientSummary from '../components/PatientSummary';
 import AddPrescription from '../components/AddPrescriptions';
 import AddMedication from '../components/AddMedication';
+import { Outlet } from 'react-router-dom';
 
 const PatientsSection = () => {
   const [user, setUser] = useState(() => {
@@ -30,7 +31,8 @@ const PatientsSection = () => {
       <div className="main">
         <Topbar />
         <div className="details">
-          <PatientManagement setSelectedUser={setSelectedUser}/>
+          <Outlet context={{ setSelectedUser, selectedUser }}/>
+          {/* <PatientManagement setSelectedUser={setSelectedUser}/> */}
           <AddMedication user={usernameToUse} />
         </div>
         <Footer />

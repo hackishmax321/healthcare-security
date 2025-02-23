@@ -57,9 +57,9 @@ const AddMedication = ({ user }) => {
   };
 
   const links = [
-    { name: "View Schedule", path: "/logged/drugs-addherence/schedule" },
-    { name: "Add New Prescription", path: "/logged/drugs-addherence" },
-    { name: "Manage Medicines", path: "/logged/drugs-management" },
+    { name: "All Patients", path: "/logged/patients-section" },
+    { name: "Add New Prescription", path: "/logged/patients-section/add-prescription" },
+    { name: "See Schedule", path: "/logged/patients-section/medication-schedule" },
   ];
 
   return (

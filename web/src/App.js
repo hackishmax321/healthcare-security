@@ -20,6 +20,10 @@ import ActivityList from './components/ActivityList';
 import ExcerciseSchedulesList from './components/ExerciseSchedulesList';
 import LifePathSuggestions from './components/LifePathSuggetions';
 import MedicineManagement from './pages/MedicineManagement';
+import PatientManagement from './components/PatientsManagement';
+import PrescriptionNotes from './components/PrescriptioNotes';
+import PatientPrescriptionNotes from './components/PatientPrescriptioNotes';
+import PatientMedicationSchedule from './components/PatientMedicationsList';
 
 const ProtectedRoute = ({ element, allowedRoles }) => {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -53,7 +57,11 @@ function App() {
           <Route path="exercise-schedule" element={<ExcerciseSchedulesList />} />
           <Route path="life-path" element={<LifePathSuggestions />} />
         </Route>
-        <Route path="/logged/patients-section" element={<ProtectedRoute element={<PatientsSection />} allowedRoles={['Doctor', 'Care Giver', 'Administrator']} />} />
+        <Route path="/logged/patients-section" element={<ProtectedRoute element={<PatientsSection />} allowedRoles={['Doctor', 'Care Giver', 'Administrator']} />}>
+          <Route index element={<PatientManagement />} />
+          <Route path="add-prescription" element={<PatientPrescriptionNotes />} />
+          <Route path="medication-schedule" element={<PatientMedicationSchedule />} />
+        </Route>
         <Route path="/logged/dashboard" element={<ProtectedRoute element={<Dashboard />} allowedRoles={['Patient', 'Doctor', 'Care Giver', 'Administrator']} />} />
         <Route path="/logged/drugs-sugetion" element={<ProtectedRoute element={<DrugSuggetions />} allowedRoles={['Patient', 'Doctor', 'Care Giver', 'Administrator']} />} />
         <Route path="/logged/drugs-addherence" element={<ProtectedRoute element={<DrugAddhrence />} allowedRoles={['Patient', 'Doctor', 'Care Giver', 'Administrator']} />} />

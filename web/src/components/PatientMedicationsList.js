@@ -3,8 +3,10 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import ENV from '../data/Env';
+import { useOutletContext } from 'react-router-dom';
 
-const MedicationSchedule = ({ user }) => {
+const PatientMedicationSchedule = () => {
+  const { selectedUser} = useOutletContext();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [medications, setMedications] = useState([]);
   const [markedDates, setMarkedDates] = useState({});
@@ -16,10 +18,14 @@ const MedicationSchedule = ({ user }) => {
   // console.log(user)
 
   useEffect(() => {
-    fetchPrescriptions(user);
-  }, [user]);
+    if(selectedUser){
+      fetchPrescriptions(selectedUser.username);
+    }
+    
+  }, [selectedUser]);
 
   const fetchPrescriptions = async (user) => {
+    console.log(user)
     try {
       const response = await axios.get(`${ENV.SERVER}/prescriptionSchedule/${user}`);
       // console.log(response.data);
@@ -75,7 +81,7 @@ const MedicationSchedule = ({ user }) => {
     if (date <= new Date()) {
         console.log(date);
         try {
-            const response = await axios.get(`${ENV.SERVER}/medication-daily/${user}/${formattedDate}`);
+            const response = await axios.get(`${ENV.SERVER}/medication-daily/${selectedUser.username}/${formattedDate}`);
             console.log("Fetched past medication record:", response.data);
 
             if (response.data && response.data.medications) {
@@ -152,7 +158,7 @@ const MedicationSchedule = ({ user }) => {
     };
   
     try {
-      const response = await axios.post(`${ENV.SERVER}/medication-daily/${user}/${formattedDate}`, payload);
+      const response = await axios.post(`${ENV.SERVER}/medication-daily/${selectedUser.username}/${formattedDate}`, payload);
       alert("Medication schedule saved successfully!");
     } catch (error) {
       console.error("Error saving medication schedule:", error);
@@ -164,7 +170,7 @@ const MedicationSchedule = ({ user }) => {
 
   return (
     <div className="recentOrders">
-      <h2>Medication Schedule</h2>
+      <h2>Medication Schedule of {selectedUser?selectedUser.username:'Me'}</h2>
 
       <div style={styles.calendarContainer}>
         <Calendar
@@ -287,4 +293,4 @@ const styles = {
   },
 };
 
-export default MedicationSchedule;
+export default PatientMedicationSchedule;

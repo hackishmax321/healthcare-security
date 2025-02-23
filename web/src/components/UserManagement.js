@@ -128,9 +128,16 @@ const UserManagement = ({setSelectedUser}) => {
                     }
                     onClick={() => setSelectedUser(user)}
                     >
-                    <td style={{ padding: "10px", border: "1px solid #ddd" }}>{user.username}</td>
-                    <td style={{ padding: "10px", border: "1px solid #ddd" }}>{user.full_name}</td>
-                    <td style={{ padding: "10px", border: "1px solid #ddd" }}>{user.email}</td>
+                    <td style={{ padding: "10px", border: "1px solid #ddd" }}>
+                      {user.username.length > 10 ? `${user.username.substring(0, 10)}...` : user.username}
+                    </td>
+                    <td style={{ padding: "10px", border: "1px solid #ddd" }}>
+                      {user.full_name.length > 15 ? `${user.full_name.substring(0, 15)}...` : user.full_name}
+                    </td>
+                    <td style={{ padding: "10px", border: "1px solid #ddd" }}>
+                      {user.email.length > 20 ? `${user.email.substring(0, 20)}...` : user.email}
+                    </td>
+
                     <td style={{ padding: "10px", border: "1px solid #ddd" }}>{user.role}</td>
                     <td style={{ padding: "10px", border: "1px solid #ddd" }}>{user.contact}</td>
                     <td style={{ padding: "10px", border: "1px solid #ddd", textAlign: "center" }}>

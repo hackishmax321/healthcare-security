@@ -35,7 +35,7 @@ const SignIn = () => {
       const response = await axios.post('http://localhost:8000/login', formData);
       Notiflix.Notify.success('Login successful');
       const response2 = await axios.post('http://localhost:8000/face-detection/recognize', {username:formData.username});
-      console.log(response2.data)
+      // console.log(response2.data)
       if(response2.data){
         if(response2.data.detected){
           localStorage.setItem('user', JSON.stringify(response.data.user));

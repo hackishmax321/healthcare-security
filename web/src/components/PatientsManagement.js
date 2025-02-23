@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ENV from '../data/Env';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { FaEye, FaTimes } from 'react-icons/fa';
 import Notiflix from 'notiflix';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
-const PatientManagement = ({ setSelectedUser }) => {
+const PatientManagement = () => {
+  const { setSelectedUser} = useOutletContext();
   const [patients, setPatients] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -137,9 +138,23 @@ const PatientManagement = ({ setSelectedUser }) => {
                   }
                   onClick={() => setSelectedUser(patient.user)}
                 >
-                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>{patient.user.username}</td>
-                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>{patient.user.full_name}</td>
-                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>{patient.user.email}</td>
+                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>
+                    {patient.user.username.length > 10 
+                      ? `${patient.user.username.substring(0, 10)}...` 
+                      : patient.user.username}
+                  </td>
+                  {/* <td style={{ padding: '10px', border: '1px solid #ddd' }}>{patient.user.full_name}</td> */}
+                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>
+                    {patient.user.full_name.length > 15 
+                      ? `${patient.user.full_name.substring(0, 15)}...` 
+                      : patient.user.full_name}
+                  </td>
+                  {/* <td style={{ padding: '10px', border: '1px solid #ddd' }}>{patient.user.email}</td> */}
+                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>
+                    {patient.user.email.length > 15 
+                      ? `${patient.user.email.substring(0, 15)}...` 
+                      : patient.user.email}
+                  </td>
                   <td style={{ padding: '10px', border: '1px solid #ddd' }}>{patient.user.contact}</td>
                   <td style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center' }}>
                     {/* <Link
